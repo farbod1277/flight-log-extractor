@@ -1,15 +1,28 @@
-classdef Flightdata
-    
+classdef FlightData
+    %A class which converts .mat files from mission planner into an easy to
+    %use MATLAB class:
+    %
+    %   Use: data = FlightData("<path of .mat file>") in order to construct
+    %   an instance of the class.
+    %
+    %   Use: time = FlightData.time() in order to get a time vector of the
+    %   data. This is generated using a suitable time step and
+    %   interpolation of the data from the .mat file.
+    %   
+    %   Use: time = FlightData.<flightdatavariable>(<time>) to get a vector
+    %   of the data for the <flightdatavariable> at the given <time>
     
     properties
-        Property1
+        time                                                   %time vector
+        BATVolt                                            %Battery Voltage
+        BATCurr                                            %Battery Current
+        BATCurrTot                                   %Battery Current Total
     end
     
     methods
-        function obj = untitled(inputArg1,inputArg2)
-            %UNTITLED Construct an instance of this class
-            %   Detailed explanation goes here
-            obj.Property1 = inputArg1 + inputArg2;
+        function obj = FlightData(path)
+            %This is called once an instance of the class is created.
+            
         end
         
         function outputArg = method1(obj,inputArg)
