@@ -1,16 +1,5 @@
 classdef FlightData < dynamicprops
-    %A class which converts .mat files from mission planner into an easy to
-    %use MATLAB class:
-    %
-    %   Use: data = FlightData("<path of .mat file>") in order to construct
-    %   an instance of the class.
-    %
-    %   Use: time = FlightData.time() in order to get a time vector of the
-    %   data. This is generated using a suitable time step and
-    %   interpolation of the data from the .mat file.
-    %   
-    %   Use: time = FlightData.<flightdatavariable>(<time>) to get a vector
-    %   of the data for the <flightdatavariable> at the given <time>
+    %FlightData Class
     
     properties
         delimitedData;
@@ -32,3 +21,13 @@ classdef FlightData < dynamicprops
     end
 end
 
+function delimitedData = parse(path)
+%Returns a cell array of the raw data delimited by ',' and '\n'
+
+fid = fopen(path);
+rawData = fscanf(fid,'%c');
+
+delimitedByLineData = regexp(rawData, '\n', 'split');
+
+delimitedData = strtrim(regexp(string(transpose(delimitedByLineData(1,:))), ',', 'split'));
+end
