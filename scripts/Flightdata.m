@@ -1,4 +1,4 @@
-classdef FlightData
+classdef FlightData < dynamicprops
     %A class which converts .mat files from mission planner into an easy to
     %use MATLAB class:
     %
@@ -13,22 +13,21 @@ classdef FlightData
     %   of the data for the <flightdatavariable> at the given <time>
     
     properties
-        time                                                   %time vector
-        BATVolt                                            %Battery Voltage
-        BATCurr                                            %Battery Current
-        BATCurrTot                                   %Battery Current Total
+        delimitedData;
+        P;
     end
     
     methods
         function obj = FlightData(path)
-            %This is called once an instance of the class is created.
-            
+            % This is called once an instance of the class is created
+            % The data is parsed from a .log file into cell arrays
+            obj.delimitedData = parse(path);
         end
         
-        function outputArg = method1(obj,inputArg)
-            %METHOD1 Summary of this method goes here
-            %   Detailed explanation goes here
-            outputArg = obj.Property1 + inputArg;
+        function obtainData(obj, var)
+            idx = cellfun(@(x)x(1),obj.delimitedData) == var;
+            obj.P = addprop(obj, var);
+            obj.(obj.P.Name) = {obj.delimitedData{idx,1}}';
         end
     end
 end

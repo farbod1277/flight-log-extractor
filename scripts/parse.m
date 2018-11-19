@@ -2,7 +2,7 @@ function delimitedData = parse(path)
 %Returns a cell array of the raw data delimited by ',' and '\n'
 
 fid = fopen(path);
-rawData = fscanf(fid,'%c');
+rawData = textscan(fid,'%c');
 
 delimitedByLineData = regexp(rawData, '\n', 'split');
 
