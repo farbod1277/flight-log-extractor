@@ -4,10 +4,7 @@ function delimitedData = parse(path)
 fid = fopen(path);
 rawData = fscanf(fid,'%c');
 
-delimitedByLineData = strsplit(rawData, '\n');
+delimitedByLineData = regexp(rawData, '\n', 'split');
 
-delimitedData = cell(length(delimitedByLineData),1);
-for i = 1:length(delimitedByLineData)
-    delimitedData{i} = strtrim(strsplit(string(delimitedByLineData(1,i)), ','));
-end
+delimitedData = strtrim(regexp(string(transpose(delimitedByLineData(1,:))), ',', 'split'));
 end
